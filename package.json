@@ -1,0 +1,38 @@
+{
+  "name": "wordtris",
+  "version": "1.0.0",
+  "description": "A modern JavaScript word puzzle game combining Tetris mechanics with word formation",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "python -m http.server 8000",
+    "dev": "python -m http.server 8080"
+  },
+  "keywords": [
+    "game",
+    "javascript",
+    "html5",
+    "canvas",
+    "word-game",
+    "puzzle",
+    "tetris"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/wordtris"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/wordtris/issues"
+  },
+  "homepage": "https://github.com/yourusername/wordtris#readme",
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "not IE_Mob 11"
+  ]
+}
