@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordtris - Word Puzzle Game</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/game.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Wordtris</h1>
+            <div class="score-display">
+                <span>Score: <span id="score">0</span></span>
+                <span>Level: <span id="level">1</span></span>
+            </div>
+        </header>
+
+        <main>
+            <div class="game-container">
+                <canvas id="game-canvas" width="800" height="600"></canvas>
+                <div class="game-controls">
+                    <button id="start-btn">Start Game</button>
+                    <button id="pause-btn">Pause</button>
+                    <button id="restart-btn">Restart</button>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="next-piece">
+                    <h3>Next Word</h3>
+                    <div id="next-word-display"></div>
+                </div>
+                <div class="instructions">
+                    <h3>How to Play</h3>
+                    <ul>
+                        <li>Use arrow keys to move words</li>
+                        <li>Rotate with spacebar</li>
+                        <li>Complete words to score points</li>
+                        <li>Don't let the stack reach the top!</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Game Scripts -->
+    <script src="src/utils/helpers.js"></script>
+    <script src="src/game/gameState.js"></script>
+    <script src="src/game/gameBoard.js"></script>
+    <script src="src/game/wordPiece.js"></script>
+    <script src="src/game/gameEngine.js"></script>
+    <script src="src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+/* Game-specific styles */
+.game-grid {
+    display: grid;
+    gap: 2px;
+    background: #333;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.grid-cell {
+    width: 30px;
+    height: 30px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.grid-cell.filled {
+    background: #667eea;
+    color: white;
+}
+
+.grid-cell.active {
+    background: #ff6b6b;
+    color: white;
+    animation: pulse 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+    from {
+        opacity: 0.7;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Game Over Screen */
+.game-over-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.game-over-modal {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.game-over-modal h2 {
+    color: #ff6b6b;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+.game-over-modal p {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.game-over-modal button {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.game-over-modal button:hover {
+    background: #5a6fd8;
+}
