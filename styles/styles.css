@@ -1,0 +1,126 @@
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+h1 {
+  margin: 20px 0;
+}
+
+/* Game board styles */
+#game-board {
+  display: grid;
+  grid-template-columns: repeat(7, 60px);
+  grid-template-rows: repeat(8, 60px);
+  gap: 5px;
+  justify-content: center;
+  margin: 20px auto;
+  background-color: var(--game-board-color); /* Add this line */
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.tile {
+  width: 60px;
+  height: 60px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  display: flex; /* Add flex for centering */
+  justify-content: center; /* Center text horizontally */
+  align-items: center; /* Center text vertically */
+  text-transform: uppercase; /* Make text capital letters */
+  font-size: 1.1em; /* Increase text size by 1.1 times */
+}
+
+/* Preview container styles */
+#preview-container {
+  display: grid;
+  grid-template-rows: repeat(3, 60px);
+  grid-template-columns: 60px;
+  gap: 5px;
+  margin-left: 20px;
+  align-self: center;
+}
+
+/* Shake animation */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+.tile.shake {
+  animation: shake 0.3s ease-in-out 3;
+}
+
+/* New word button animation */
+@keyframes newWordPop {
+  0% { transform: scale(1); box-shadow: 0 0 0 0px #ffd700; }
+  30% { transform: scale(1.2); box-shadow: 0 0 10px 0px #ffd700; }
+  70% { transform: scale(1.05); box-shadow: 0 0 8px 4px #ffd700; }
+  100% { transform: scale(1); box-shadow: 0 0 0 0px #ffd700; }
+}
+
+.new-word-animate {
+  animation: newWordPop 0.7s ease;
+  z-index: 1;
+}
+
+/* Spawn row active tile */
+.spawn-row-active {
+  border: 2px solid #222;
+  font-weight: bold;
+  background: #ffeeba;
+}
+
+/* Spawn row invisible tile */
+.spawn-invisible {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+/* Spawn row active tile */
+.spawn-active {
+  opacity: 1;
+  font-weight: bold;
+  transition: opacity 0.2s, font-weight 0.2s;
+}
+
+/* Preview slide-up */
+.preview-animate-up {
+  animation: previewUp 0.3s cubic-bezier(.5, .1, .5, .5, 1);
+}
+
+@keyframes previewUp {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-10px); opacity: 0.7; } /* Note: this looks like a typo in the code, a more typical animation would be 0% at -10px, 100% at 0px. I've transcribed what is visible. */
+  0% { transform: translateY(0); opacity: 1; }
+}
+
+/* Glowing effect for spawn */
+@keyframes spawnGlow {
+  0% { box-shadow: 0 0 0 0px #ffd700, 0 0 0 0px #fffbe7; }
+  50% { box-shadow: 0 0 10px 8px #ffd700, 0 0 8px 0px #fffbe7; }
+  100% { box-shadow: 0 0 0 0px #ffd700, 0 0 0 0px #fffbe7; }
+}
+
+.spawn-glow {
+  animation: spawnGlow 1s cubic-bezier(.5, .5, .5, .5, 1);
+  box-shadow: 0 0 10px 8px #ffd700, 0 0 8px 0px #fffbe7;
+}
+
+@keyframes spawnGlow {
+  0% { box-shadow: 0 0 0 0px #ffd700, 0 0 0 0px #fffbe7; }
+  20% { box-shadow: 0 0 24px 12px #ffd700, 0 0 8px 4px #fffbe7; }
+  60% { box-shadow: 0 0 24px 12px #ffd700, 0 0 8px 4px #fffbe7; }
+  100% { box-shadow: 0 0 0 0px #ffd700, 0 0 0 0px #fffbe7; }
+}
