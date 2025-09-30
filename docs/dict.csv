@@ -1,4 +1,13 @@
 word,word_length,starts_with,ends_with,has_definition,definition_count,part_of_speech,definition,examples,synset_name
+she,3,s,h,True,10,p,used to refer to a woman or girl previously mentioned or easily identified,she is a teacher; she went to the store,she.p.01
+her,3,h,r,True,10,p,used as the object form of 'she'; belonging to or associated with a female,Give her the book; her car is red,her.p.01
+him,3,h,m,True,10,p,used as the object form of 'he',I saw him at the park,him.p.01
+pea,3,p,a,True,5,n,a small round green vegetable that grows in a pod,She ate peas with dinner,pea.n.01
+peas,4,p,s,True,5,n,plural of pea; small round green vegetables,Peas are healthy,peas.n.01
+ark,3,a,k,True,2,n,a large boat or ship; especially the one built by Noah in the Bible,Noah's ark survived the flood,ark.n.01
+irk,3,i,k,True,1,v,to irritate or annoy,His constant questions irk me,irk.v.01
+dirk,4,d,k,True,1,n,a short dagger,The pirate carried a dirk,dirk.n.01
+pep,3,p,p,True,3,n,energy or liveliness,She has a lot of pep in her step,pep.n.01
 100,3,1,0,True,2,n,ten 10s,,hundred.n.01
 1000,4,1,0,True,2,n,the cardinal number that is the product of 10 and 100,,thousand.n.01
 101,3,1,1,True,1,s,being one more than one hundred,,hundred_and_one.s.01
