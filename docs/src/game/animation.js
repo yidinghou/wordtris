@@ -100,8 +100,9 @@ export class Animations {
         // 4. Clean up and run onComplete
         setTimeout(() => {
             tiles.forEach(tile => {
-                tile.classList.remove('highlight');
-                tile.classList.remove('shake');
+                // Instead of just removing classes, reset to clean state
+                tile.className = 'tile';
+                tile.textContent = '';
             });
             if (onComplete) {
                 onComplete(tiles);
