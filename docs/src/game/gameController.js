@@ -160,6 +160,9 @@ export class GameController {
     if (targetRow !== -1) {
       this.inputController.disable();
 
+      // Clear the spawn tile immediately when dropping starts
+      this.ui.clearSpawnRow();
+
       // Start animation first, then update game state when animation completes
       Animations.animateTileDrop(this.board, targetRow, col, letter, () => {
         // Now update the game state after animation
@@ -168,8 +171,12 @@ export class GameController {
         this.wordValidator.checkWords(this.game, this.board, targetRow, col, this.handleWordFound.bind(this));
 
         if (!this.wordValidator.wordFound) {
-          this.ui.updateSpawnRow(col, this.tileGenerator.tiles[this.tileGenerator.currentIndex]);
-          this.glowSpawnTile(col);
+          this.ui.updateSpawnRowWithDrop(col, this.tileGenerator.tiles[this.tileGenerator.currentIndex]);
+          
+          // Delay the glow effect to happen after the drop-in animation
+          setTimeout(() => {
+            this.glowSpawnTile(col);
+          }, 400);
         }
 
         this.updatePreviewAndCounter();

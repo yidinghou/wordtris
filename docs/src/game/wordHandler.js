@@ -12,8 +12,14 @@ export class WordHandler {
     console.log('Highlighting tiles for word');
     this.gameController.inputController.disable();
 
-    this.gameController.ui.clearSpawnRow();
-    this.gameController.hideSpawnRowTiles();
+    // Immediately show the next tile in center column (column 3) when word is made with drop animation
+    const centerCol = 3; // Center column for 7-column grid (0-indexed)
+    this.gameController.ui.updateSpawnRowWithDrop(centerCol, this.gameController.tileGenerator.tiles[this.gameController.tileGenerator.currentIndex]);
+    
+    // Delay the glow effect to happen after the drop-in animation
+    setTimeout(() => {
+      this.gameController.glowSpawnTile(centerCol);
+    }, 400);
 
     // Extract the word from tiles to calculate score
     word = '';

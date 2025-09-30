@@ -150,20 +150,24 @@ export class WordValidator {
         // Define diagonal traversal direction
         const rowIncrement = (direction === 'main') ? 1 : -1; // Down for main, up for anti
 
-        // Step 1: Move to leftmost position on the diagonal
+        // Step 1: Find the true start of the diagonal line
         let r = startRow;
         let c = startCol;
 
-        // Traverse to the true start of the diagonal line based on direction
-        while (c > 0 && r >= 0 && r < game.rows) {
-            c--;
-            r -= rowIncrement;
+        // Move to the leftmost position on the diagonal
+        if (direction === 'main') {
+            // For main diagonal (top-left to bottom-right)
+            while (r > 0 && c > 0) {
+                r--;
+                c--;
+            }
+        } else {
+            // For anti-diagonal (bottom-left to top-right)  
+            while (r < game.rows - 1 && c > 0) {
+                r++;
+                c--;
+            }
         }
-
-        // Correct for overshooting the board boundary
-        if (c < 0) { c = 0; r += rowIncrement; }
-        if (r < 0) { r = 0; c += (direction === 'anti' ? 1 : 0); }
-        if (r >= game.rows) { r = game.rows - 1; c -= (direction === 'main' ? 1 : 0); }
 
 
         // Step 2: Traverse diagonally right, collecting letters
@@ -266,21 +270,14 @@ export class WordValidator {
                 break;
 
             case 'mainDiag':
-                // Find top-left starting point (r, c) of the diagonal line
-                let startRow = row;
-                let startCol = col;
-                while (startRow > 0 && startCol > 0) {
-                    startRow--;
-                    startCol--;
-                }
-
-                // Traverse from the diagonal start, using startIndex
+                // Get the diagonal letters and positions to ensure consistency
+                const { positions: mainDiagPositions } = this.getDiagonalLetters(board.game, board, row, col, 'main');
+                
+                // Use the actual positions from getDiagonalLetters for accuracy
                 for (let i = 0; i < wordObj.word.length; i++) {
-                    // r = startRow + (startIndex + i), c = startCol + (startIndex + i)
-                    const r = startRow + wordObj.startIndex + i;
-                    const c = startCol + wordObj.startIndex + i;
-
-                    if (r >= 0 && r < board.game.rows && c >= 0 && c < board.game.cols) {
+                    const posIndex = wordObj.startIndex + i;
+                    if (posIndex < mainDiagPositions.length) {
+                        const [r, c] = mainDiagPositions[posIndex];
                         const tile = board.getTileElement(r, c);
                         if (tile) tiles.push(tile);
                     }
@@ -288,27 +285,14 @@ export class WordValidator {
                 break;
 
             case 'antiDiag':
-                // Find bottom-left starting point (r, c) of the diagonal line
-                let startRowAnti = row;
-                let startColAnti = col;
-                while (startRowAnti < board.game.rows - 1 && startColAnti > 0) {
-                    startRowAnti++;
-                    startColAnti--;
-                }
-
-                // Traverse from the diagonal start, using startIndex
+                // Get the diagonal letters and positions to ensure consistency
+                const { positions: antiDiagPositions } = this.getDiagonalLetters(board.game, board, row, col, 'anti');
+                
+                // Use the actual positions from getDiagonalLetters for accuracy
                 for (let i = 0; i < wordObj.word.length; i++) {
-                    // r = startRowAnti - (startIndex + i), c = startColAnti + (startIndex + i)
-                    // The anti-diagonal index calculation is complex. This interpretation uses the
-                    // indices derived from the getDiagonalLetters process.
-
-                    // To simplify this, we'll rely on the position array from getDiagonalLetters
-                    // which is missing from the passed arguments. Since we can't access that here,
-                    // we'll use the geometric calculation:
-                    const r = startRowAnti - (wordObj.startIndex + i);
-                    const c = startColAnti + (wordObj.startIndex + i);
-
-                    if (r >= 0 && r < board.game.rows && c >= 0 && c < board.game.cols) {
+                    const posIndex = wordObj.startIndex + i;
+                    if (posIndex < antiDiagPositions.length) {
+                        const [r, c] = antiDiagPositions[posIndex];
                         const tile = board.getTileElement(r, c);
                         if (tile) tiles.push(tile);
                     }
@@ -316,7 +300,9 @@ export class WordValidator {
                 break;
         }
 
-        return tiles;
+        // Filter out spawn tiles - we don't want to clear them when words are found
+        const filteredTiles = tiles.filter(tile => !tile.classList.contains('spawn-tile'));
+        return filteredTiles;
     }
 
     /**
