@@ -160,6 +160,9 @@ export class GameController {
     if (targetRow !== -1) {
       this.inputController.disable();
 
+      // Clear the spawn tile immediately when dropping starts
+      this.ui.clearSpawnRow();
+
       // Start animation first, then update game state when animation completes
       Animations.animateTileDrop(this.board, targetRow, col, letter, () => {
         // Now update the game state after animation

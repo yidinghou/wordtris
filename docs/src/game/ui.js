@@ -23,6 +23,8 @@ export class UI {
             tile.textContent = '';
             // Remove highlight from all columns
             tile.classList.remove('spawn-row-active');
+            // Make tile invisible when clearing
+            tile.style.visibility = 'hidden';
         });
 
         // 2. If column and letter are provided, set the active tile
@@ -33,6 +35,8 @@ export class UI {
                 spawnTile.textContent = letter;
                 // Add bold border/highlight to the active column
                 spawnTile.classList.add('spawn-row-active');
+                // Make tile visible when setting content
+                spawnTile.style.visibility = 'visible';
             }
         }
     }

@@ -12,8 +12,10 @@ export class WordHandler {
     console.log('Highlighting tiles for word');
     this.gameController.inputController.disable();
 
-    this.gameController.ui.clearSpawnRow();
-    this.gameController.hideSpawnRowTiles();
+    // Immediately show the next tile in center column (column 3) when word is made
+    const centerCol = 3; // Center column for 7-column grid (0-indexed)
+    this.gameController.ui.updateSpawnRow(centerCol, this.gameController.tileGenerator.tiles[this.gameController.tileGenerator.currentIndex]);
+    this.gameController.glowSpawnTile(centerCol);
 
     // Extract the word from tiles to calculate score
     word = '';
