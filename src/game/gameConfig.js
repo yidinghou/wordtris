@@ -24,7 +24,6 @@ export const GameConfig = {
   MAX_MADE_WORDS: 10,
   
   // Themes
-  DEFAULT_THEME: 'theme-red',
   
   // Tile size for responsive design
   TILE_SIZE: 60,
