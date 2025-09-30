@@ -11,9 +11,10 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    padding: 20px;
+    padding: 10px;
+    margin: 0;
 }
 
 .game-header {
@@ -29,8 +30,7 @@ body {
     gap: 20px;
     max-width: 1200px;
     width: 100%;
-    height: 80vh;
-    min-height: 600px;
+    min-height: fit-content;
 }
 
 /* Horizontal next tiles panel */
@@ -60,10 +60,13 @@ body {
     grid-area: game-board;
     background-color: #f1f5fa;
     border-radius: 10px;
-    padding: 20px;
+    padding: 15px;
     border: 2px solid #000000;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .panel-title {
@@ -161,15 +164,22 @@ body {
   border: 2px solid #000000;
   border-radius: 8px;
   padding: 10px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* Game board styles - grid layout set programmatically by Board class */
 #game-board {
   background-color: var(--game-board-color);
-  padding: 10px;
+  padding: 5px;
   border-radius: 10px;
   display: grid;
-  gap: 2px;
+  gap: 1px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .tile {
@@ -214,7 +224,7 @@ body {
 #preview-container {
     display: grid;
     grid-template-columns: repeat(7, 60px);
-    gap: 5px;
+    gap: 1px;
     justify-content: center;
 }
 
@@ -349,8 +359,16 @@ body {
   100% { box-shadow: 0 0 0 0px #ffd700, 0 0 0 0px #fffbe7; }
 }
 
-/* Improved Responsive Design */
+/* Improved Mobile Responsive Design */
 @media (max-width: 768px) {
+    body {
+        padding: 2px;
+        width: 100vw;
+        max-width: 100vw;
+        overflow-x: hidden;
+        box-sizing: border-box;
+    }
+
     .main-container {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
@@ -358,18 +376,53 @@ body {
             "game-board"
             "right-panel";
         height: auto;
-        gap: 10px;
-        padding: 10px;
+        gap: 5px;
+        padding: 0;
+        max-width: 100vw;
+        width: 100vw;
+        box-sizing: border-box;
+        margin: 0;
     }
     
     .game-board {
         order: 1;
+        padding: 3px;
+        max-width: 100vw;
+        width: 100vw;
+        box-sizing: border-box;
+        overflow: hidden;
+        margin: 0;
+        border: 1px solid #000000;
+    }
+    
+    .game-board-container {
+        padding: 3px;
+        max-width: calc(100vw - 10px);
+        width: calc(100vw - 10px);
+        box-sizing: border-box;
+        overflow: hidden;
+        margin: 0;
+        border: 1px solid #000000;
     }
     
     .right-panel {
         order: 2;
-        max-height: 200px;
-        min-height: 200px;
+        max-height: 180px;
+        min-height: 150px;
+        padding: 15px;
+    }
+
+    .game-title {
+        font-size: 2em;
+        margin-bottom: 10px;
+    }
+
+    .score-container {
+        flex-direction: column;
+        gap: 8px;
+        font-size: 0.9em;
+        padding: 10px;
+        margin-top: 15px;
     }
 
     .next-tiles-horizontal {
@@ -378,44 +431,114 @@ body {
         gap: 10px;
     }
     
-    /* Optimize tile sizing for mobile */
+    /* Mobile-optimized tile sizing - viewport based for perfect fit */
     .tile {
-        width: calc((100vw - 80px) / 7 - 5px); /* Dynamic width based on viewport */
-        height: calc((100vw - 80px) / 7 - 5px);
-        min-width: 35px;
-        min-height: 35px;
-        border-width: 1px; /* Reduce border thickness */
-        font-size: 1.2em;
+        width: calc((100vw - 50px) / 7);
+        height: calc((100vw - 50px) / 7);
+        max-width: calc((100vw - 50px) / 7);
+        max-height: calc((100vw - 50px) / 7);
+        min-width: calc((100vw - 50px) / 7);
+        min-height: calc((100vw - 50px) / 7);
+        border-width: 0.5px;
+        font-size: calc(0.5em + 1vw);
+        font-weight: bold;
     }
     
     #game-board {
-        grid-template-columns: repeat(7, calc((100vw - 80px) / 7 - 5px));
-        grid-template-rows: repeat(6, calc((100vw - 80px) / 7 - 5px));
-        gap: 3px; /* Reduce gap between tiles */
+        display: grid !important;
+        grid-template-columns: repeat(7, calc((100vw - 50px) / 7)) !important;
+        grid-template-rows: repeat(6, calc((100vw - 50px) / 7)) !important;
+        gap: 1px !important;
+        padding: 2px !important;
+        max-width: calc(100vw - 20px) !important;
+        width: calc(100vw - 20px) !important;
+        justify-content: center !important;
+        align-items: center !important;
+        overflow: hidden !important;
+        aspect-ratio: 7/6 !important;
+        margin: 0 auto !important;
+        box-sizing: border-box !important;
     }
     
     .preview-panel {
-        border-width: 1px; /* Thinner border */
+        border-width: 1px;
+        padding: 4px;
+        margin-bottom: 4px;
     }
     
     #preview-container {
-        grid-template-columns: repeat(7, calc((100vw - 80px) / 7 - 5px));
-        gap: 3px;
+        display: grid !important;
+        grid-template-columns: repeat(7, calc((100vw - 50px) / 7)) !important;
+        grid-template-rows: 1fr !important;
+        gap: 1px !important;
+        justify-content: center !important;
+        align-items: center !important;
+        max-width: calc(100vw - 20px) !important;
+        width: calc(100vw - 20px) !important;
+        overflow: hidden !important;
+        padding: 0 !important;
+        margin: 0 auto !important;
+        box-sizing: border-box !important;
+    }
+
+    #preview-container > div {
+        width: calc((100vw - 50px) / 7) !important;
+        height: calc((100vw - 50px) / 7) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-sizing: border-box !important;
     }
 
     #preview-container .tile {
-        width: calc((100vw - 80px) / 7 - 5px);
-        height: calc((100vw - 80px) / 7 - 5px);
-        min-width: 35px;
-        min-height: 35px;
-        border-width: 1px;
-        font-size: 1.2em;
+        width: calc((100vw - 50px) / 7) !important;
+        height: calc((100vw - 50px) / 7) !important;
+        max-width: calc((100vw - 50px) / 7) !important;
+        max-height: calc((100vw - 50px) / 7) !important;
+        min-width: calc((100vw - 50px) / 7) !important;
+        min-height: calc((100vw - 50px) / 7) !important;
+        border-width: 1px !important;
+        font-size: calc(0.4em + 1vw) !important;
+        font-weight: bold !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .preview-panel {
+        border-width: 2px !important;
+        padding: 8px !important;
+        margin-bottom: 8px !important;
+        overflow: hidden !important;
+        width: calc(100vw - 20px) !important;
+        max-width: calc(100vw - 20px) !important;
+        box-sizing: border-box !important;
+        background-color: rgba(76, 175, 80, 0.15) !important;
+    }
+    
+    .preview-panel::before {
+        content: "Next Up" !important;
+        position: absolute !important;
+        top: 0px !important;
+        left: 10px !important;
+        background-color: #4CAF50 !important;
+        color: white !important;
+        padding: 2px 8px !important;
+        font-size: 0.9em !important;
+        font-weight: bold !important;
+        border-radius: 4px !important;
+        border: 1px solid #ffffff !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
+        z-index: 10 !important;
     }
 }
 
 @media (max-width: 480px) {
     body {
-        padding: 10px;
+        padding: 5px;
+        width: 100vw;
+        max-width: 100vw;
+        overflow-x: hidden;
     }
 
     .main-container {
@@ -423,58 +546,213 @@ body {
     }
 
     .game-board {
-        padding: 15px;
+        padding: 8px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .game-board-container {
+        padding: 6px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
     }
 
     .right-panel {
-        padding: 15px;
+        padding: 12px;
+        max-height: 160px;
+    }
+
+    .game-title {
+        font-size: 1.6em;
     }
 
     .panel-title {
-        font-size: 1.1em;
+        font-size: 1em;
+        margin-bottom: 10px;
     }
     
-    /* Even more aggressive optimization for very small screens */
+    /* Very small screen optimization */
     .tile {
-        width: calc((100vw - 60px) / 7 - 3px);
-        height: calc((100vw - 60px) / 7 - 3px);
-        min-width: 30px;
-        min-height: 30px;
-        border-width: 0.5px; /* Very thin border */
-        font-size: 1em;
-        font-weight: bold; /* Make text more visible with thinner border */
+        width: calc((100% - 40px) / 7 - 3px);
+        height: calc((100% - 40px) / 7 - 3px);
+        max-width: 40px;
+        max-height: 40px;
+        min-width: 28px;
+        min-height: 28px;
+        border-width: 0.5px;
+        font-size: 0.9em;
+        font-weight: bold;
     }
     
     #game-board {
-        grid-template-columns: repeat(7, calc((100vw - 60px) / 7 - 3px));
-        grid-template-rows: repeat(6, calc((100vw - 60px) / 7 - 3px));
-        gap: 2px; /* Minimal gap */
+        grid-template-columns: repeat(7, minmax(28px, calc((100% - 40px) / 7 - 3px)));
+        grid-template-rows: repeat(6, minmax(28px, calc((100% - 40px) / 7 - 3px)));
+        gap: 2px;
+        padding: 6px;
     }
     
     #preview-container {
-        grid-template-columns: repeat(7, calc((100vw - 60px) / 7 - 3px));
+        grid-template-columns: repeat(7, minmax(28px, calc((100% - 40px) / 7 - 3px)));
         gap: 2px;
     }
 
     #preview-container .tile {
-        width: calc((100vw - 60px) / 7 - 3px);
-        height: calc((100vw - 60px) / 7 - 3px);
-        min-width: 30px;
-        min-height: 30px;
+        width: calc((100% - 40px) / 7 - 3px);
+        height: calc((100% - 40px) / 7 - 3px);
+        max-width: 40px;
+        max-height: 40px;
+        min-width: 28px;
+        min-height: 28px;
         border-width: 0.5px;
-        font-size: 1em;
-        font-weight: bold;
+        font-size: 0.9em;
     }
-    
-    .game-title {
-        font-size: 1.8em;
+
+    .preview-panel {
+        padding: 6px;
+        margin-bottom: 6px;
+    }
+
+    .preview-panel::before {
+        font-size: 0.7em;
+        top: -10px;
+        padding: 1px 6px;
     }
     
     .score-container {
-        flex-direction: column;
-        gap: 10px;
+        gap: 6px;
+        font-size: 0.8em;
+        padding: 8px;
+        margin-top: 10px;
+    }
+
+    .made-words {
+        max-height: 120px;
+        gap: 8px;
+    }
+
+    .word-item {
+        padding: 8px;
         font-size: 0.9em;
-        padding: 10px;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 360px) {
+    .tile {
+        width: calc((100% - 30px) / 7 - 2px);
+        height: calc((100% - 30px) / 7 - 2px);
+        max-width: 40px;
+        max-height: 40px;
+        min-width: 28px;
+        min-height: 28px;
+        font-size: 0.9em;
+        border-width: 0.5px;
+    }
+    
+    #game-board {
+        grid-template-columns: repeat(7, minmax(28px, calc((100% - 30px) / 7 - 2px)));
+        grid-template-rows: repeat(6, minmax(28px, calc((100% - 30px) / 7 - 2px)));
+        gap: 1px;
+        padding: 4px;
+    }
+    
+    #preview-container {
+        grid-template-columns: repeat(7, minmax(28px, calc((100% - 30px) / 7 - 2px)));
+        gap: 1px;
+    }
+
+    #preview-container .tile {
+        width: calc((100% - 30px) / 7 - 2px);
+        height: calc((100% - 30px) / 7 - 2px);
+        max-width: 40px;
+        max-height: 40px;
+        min-width: 28px;
+        min-height: 28px;
+        font-size: 0.9em;
+        border-width: 0.5px;
+    }
+
+    .game-title {
+        font-size: 1.4em;
+    }
+
+    .game-board {
+        padding: 6px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .game-board-container {
+        padding: 4px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+}
+
+/* Ultra small screens - for phones in portrait mode */
+@media (max-width: 320px) {
+    .tile {
+        width: calc((100% - 20px) / 7 - 1px);
+        height: calc((100% - 20px) / 7 - 1px);
+        max-width: 35px;
+        max-height: 35px;
+        min-width: 22px;
+        min-height: 22px;
+        font-size: 0.8em;
+        border-width: 0.5px;
+    }
+    
+    #game-board {
+        grid-template-columns: repeat(7, minmax(22px, calc((100% - 20px) / 7 - 1px)));
+        grid-template-rows: repeat(6, minmax(22px, calc((100% - 20px) / 7 - 1px)));
+        gap: 1px;
+        padding: 3px;
+    }
+    
+    #preview-container {
+        grid-template-columns: repeat(7, minmax(22px, calc((100% - 20px) / 7 - 1px)));
+        gap: 1px;
+    }
+
+    #preview-container .tile {
+        width: calc((100% - 20px) / 7 - 1px);
+        height: calc((100% - 20px) / 7 - 1px);
+        max-width: 35px;
+        max-height: 35px;
+        min-width: 22px;
+        min-height: 22px;
+        font-size: 0.8em;
+        border-width: 0.5px;
+    }
+
+    .game-title {
+        font-size: 1.2em;
+    }
+
+    .game-board {
+        padding: 2px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .game-board-container {
+        padding: 2px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .preview-panel {
+        padding: 2px;
+        margin-bottom: 2px;
     }
 }
 
