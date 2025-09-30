@@ -51,13 +51,13 @@ export class UI {
             const gridCell = document.createElement('div');
             
             // Only add tiles to columns 0, 1, and 2 (positions 1, 2, 3)
-            if (col < 3 && col < letterQueue.length) {
+            if (col >= 1 && col <= 3 && (col - 1) < letterQueue.length) {
                 const previewTile = document.createElement('div');
                 previewTile.classList.add('tile', 'preview-tile');
-                previewTile.textContent = letterQueue[col];
+                previewTile.textContent = letterQueue[col - 1];
                 
-                // Add special class for the third tile (column 2, next tile)
-                if (col === 2) {
+                // Add special class for the third tile (column 3, next tile)
+                if (col === 3) {
                     previewTile.classList.add('next-tile-highlight');
                 }
                 
