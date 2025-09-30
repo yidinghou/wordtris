@@ -18,6 +18,13 @@ export class Animations {
     static animateTileDrop(board, row, col, letter, onComplete) {
         let currentRow = 0;
 
+        // Clear the target tile first to prevent duplicates
+        const targetTile = board.getTileElement(row, col);
+        if (targetTile) {
+            targetTile.textContent = '';
+            targetTile.classList.remove('locked', 'falling');
+        }
+
         // Set the current tile content immediately in the starting row (row 0)
         let currentTile = board.getTileElement(currentRow, col);
         currentTile.textContent = letter;
@@ -27,6 +34,13 @@ export class Animations {
             if (currentRow >= row) {
                 // Animation completed, clear the interval
                 clearInterval(interval);
+
+                // Clear the previous tile if we moved from above
+                if (currentRow > 0) {
+                    const prevTile = board.getTileElement(currentRow - 1, col);
+                    prevTile.classList.remove('falling');
+                    prevTile.textContent = '';
+                }
 
                 // Lock the final tile (add 'locked' class and final content)
                 currentTile.classList.add('locked');
