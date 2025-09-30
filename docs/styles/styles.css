@@ -350,7 +350,7 @@ body {
   100% { box-shadow: 0 0 0 0px #ffd700, 0 0 0 0px #fffbe7; }
 }
 
-/* Responsive Design */
+/* Improved Responsive Design */
 @media (max-width: 768px) {
     .main-container {
         grid-template-columns: 1fr;
@@ -359,7 +359,18 @@ body {
             "game-board"
             "right-panel";
         height: auto;
-        gap: 15px;
+        gap: 10px;
+        padding: 10px;
+    }
+    
+    .game-board {
+        order: 1;
+    }
+    
+    .right-panel {
+        order: 2;
+        max-height: 200px;
+        min-height: 200px;
     }
 
     .next-tiles-horizontal {
@@ -367,31 +378,39 @@ body {
         justify-content: center;
         gap: 10px;
     }
-
-    .right-panel {
-        min-height: 200px;
+    
+    /* Optimize tile sizing for mobile */
+    .tile {
+        width: calc((100vw - 80px) / 7 - 5px); /* Dynamic width based on viewport */
+        height: calc((100vw - 80px) / 7 - 5px);
+        min-width: 35px;
+        min-height: 35px;
+        border-width: 1px; /* Reduce border thickness */
+        font-size: 1.2em;
     }
-
-    .game-board {
-        min-height: 400px;
+    
+    #game-board {
+        grid-template-columns: repeat(7, calc((100vw - 80px) / 7 - 5px));
+        grid-template-rows: repeat(6, calc((100vw - 80px) / 7 - 5px));
+        gap: 3px; /* Reduce gap between tiles */
+    }
+    
+    .preview-panel {
+        border-width: 1px; /* Thinner border */
+    }
+    
+    #preview-container {
+        grid-template-columns: repeat(7, calc((100vw - 80px) / 7 - 5px));
+        gap: 3px;
     }
 
     #preview-container .tile {
-        width: 45px;
-        height: 45px;
-        min-height: 45px;
-        font-size: 1em;
-    }
-
-    #game-board {
-        grid-template-columns: repeat(6, 45px);
-        grid-template-rows: repeat(8, 45px);
-    }
-  
-    .tile {
-        width: 45px;
-        height: 45px;
-        font-size: 1em;
+        width: calc((100vw - 80px) / 7 - 5px);
+        height: calc((100vw - 80px) / 7 - 5px);
+        min-width: 35px;
+        min-height: 35px;
+        border-width: 1px;
+        font-size: 1.2em;
     }
 }
 
@@ -404,12 +423,59 @@ body {
         gap: 10px;
     }
 
-    .left-panel, .right-panel, .game-board {
+    .game-board {
+        padding: 15px;
+    }
+
+    .right-panel {
         padding: 15px;
     }
 
     .panel-title {
         font-size: 1.1em;
+    }
+    
+    /* Even more aggressive optimization for very small screens */
+    .tile {
+        width: calc((100vw - 60px) / 7 - 3px);
+        height: calc((100vw - 60px) / 7 - 3px);
+        min-width: 30px;
+        min-height: 30px;
+        border-width: 0.5px; /* Very thin border */
+        font-size: 1em;
+        font-weight: bold; /* Make text more visible with thinner border */
+    }
+    
+    #game-board {
+        grid-template-columns: repeat(7, calc((100vw - 60px) / 7 - 3px));
+        grid-template-rows: repeat(6, calc((100vw - 60px) / 7 - 3px));
+        gap: 2px; /* Minimal gap */
+    }
+    
+    #preview-container {
+        grid-template-columns: repeat(7, calc((100vw - 60px) / 7 - 3px));
+        gap: 2px;
+    }
+
+    #preview-container .tile {
+        width: calc((100vw - 60px) / 7 - 3px);
+        height: calc((100vw - 60px) / 7 - 3px);
+        min-width: 30px;
+        min-height: 30px;
+        border-width: 0.5px;
+        font-size: 1em;
+        font-weight: bold;
+    }
+    
+    .game-title {
+        font-size: 1.8em;
+    }
+    
+    .score-container {
+        flex-direction: column;
+        gap: 10px;
+        font-size: 0.9em;
+        padding: 10px;
     }
 }
 
