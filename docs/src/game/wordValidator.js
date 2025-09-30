@@ -300,7 +300,9 @@ export class WordValidator {
                 break;
         }
 
-        return tiles;
+        // Filter out spawn tiles - we don't want to clear them when words are found
+        const filteredTiles = tiles.filter(tile => !tile.classList.contains('spawn-tile'));
+        return filteredTiles;
     }
 
     /**
