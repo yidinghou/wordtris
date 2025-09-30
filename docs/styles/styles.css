@@ -396,9 +396,9 @@ body {
     }
     
     .game-board-container {
-        padding: 3px;
-        max-width: calc(100vw - 10px);
-        width: calc(100vw - 10px);
+        padding: 2px;
+        max-width: calc(100vw - 6px);
+        width: calc(100vw - 6px);
         box-sizing: border-box;
         overflow: hidden;
         margin: 0;
@@ -407,9 +407,11 @@ body {
     
     .right-panel {
         order: 2;
-        max-height: 180px;
-        min-height: 150px;
-        padding: 15px;
+        max-height: 160px;
+        min-height: 120px;
+        padding: 10px;
+        margin: 5px;
+        border-radius: 8px;
     }
 
     .game-title {
@@ -431,31 +433,32 @@ body {
         gap: 10px;
     }
     
-    /* Mobile-optimized tile sizing - viewport based for perfect fit */
+    /* Mobile-optimized tile sizing - fill entire grid cells */
     .tile {
-        width: calc((100vw - 50px) / 7);
-        height: calc((100vw - 50px) / 7);
-        max-width: calc((100vw - 50px) / 7);
-        max-height: calc((100vw - 50px) / 7);
-        min-width: calc((100vw - 50px) / 7);
-        min-height: calc((100vw - 50px) / 7);
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+        max-height: none !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
         border-width: 0.5px;
-        font-size: calc(0.5em + 1vw);
+        font-size: calc(0.6em + 1vw);
         font-weight: bold;
+        box-sizing: border-box !important;
     }
     
     #game-board {
         display: grid !important;
-        grid-template-columns: repeat(7, calc((100vw - 50px) / 7)) !important;
-        grid-template-rows: repeat(6, calc((100vw - 50px) / 7)) !important;
+        grid-template-columns: repeat(7, 1fr) !important;
+        grid-template-rows: repeat(6, 1fr) !important;
         gap: 1px !important;
-        padding: 2px !important;
-        max-width: calc(100vw - 20px) !important;
-        width: calc(100vw - 20px) !important;
-        justify-content: center !important;
-        align-items: center !important;
+        padding: 0 !important;
+        max-width: calc(100vw - 10px) !important;
+        width: calc(100vw - 10px) !important;
+        height: calc((100vw - 10px) * 6 / 7) !important;
+        justify-content: stretch !important;
+        align-items: stretch !important;
         overflow: hidden !important;
-        aspect-ratio: 7/6 !important;
         margin: 0 auto !important;
         box-sizing: border-box !important;
     }
@@ -468,13 +471,14 @@ body {
     
     #preview-container {
         display: grid !important;
-        grid-template-columns: repeat(7, calc((100vw - 50px) / 7)) !important;
+        grid-template-columns: repeat(7, 1fr) !important;
         grid-template-rows: 1fr !important;
         gap: 1px !important;
-        justify-content: center !important;
-        align-items: center !important;
-        max-width: calc(100vw - 20px) !important;
-        width: calc(100vw - 20px) !important;
+        justify-content: stretch !important;
+        align-items: stretch !important;
+        max-width: calc(100vw - 10px) !important;
+        width: calc(100vw - 10px) !important;
+        height: calc((100vw - 10px) / 7) !important;
         overflow: hidden !important;
         padding: 0 !important;
         margin: 0 auto !important;
@@ -491,14 +495,14 @@ body {
     }
 
     #preview-container .tile {
-        width: calc((100vw - 50px) / 7) !important;
-        height: calc((100vw - 50px) / 7) !important;
-        max-width: calc((100vw - 50px) / 7) !important;
-        max-height: calc((100vw - 50px) / 7) !important;
-        min-width: calc((100vw - 50px) / 7) !important;
-        min-height: calc((100vw - 50px) / 7) !important;
-        border-width: 1px !important;
-        font-size: calc(0.4em + 1vw) !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+        max-height: none !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        border-width: 0.5px !important;
+        font-size: calc(0.5em + 1vw) !important;
         font-weight: bold !important;
         box-sizing: border-box !important;
         margin: 0 !important;
@@ -507,11 +511,11 @@ body {
     
     .preview-panel {
         border-width: 2px !important;
-        padding: 8px !important;
-        margin-bottom: 8px !important;
+        padding: 2px !important;
+        margin-bottom: 4px !important;
         overflow: hidden !important;
-        width: calc(100vw - 20px) !important;
-        max-width: calc(100vw - 20px) !important;
+        width: calc(100vw - 10px) !important;
+        max-width: calc(100vw - 10px) !important;
         box-sizing: border-box !important;
         background-color: rgba(76, 175, 80, 0.15) !important;
     }
