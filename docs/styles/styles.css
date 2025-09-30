@@ -386,9 +386,9 @@ body {
     
     .game-board {
         order: 1;
-        padding: 3px;
-        max-width: 100vw;
-        width: 100vw;
+        padding: 5px;
+        width: 100%;
+        max-width: 100%;
         box-sizing: border-box;
         overflow: hidden;
         margin: 0;
@@ -396,9 +396,9 @@ body {
     }
     
     .game-board-container {
-        padding: 3px;
-        max-width: calc(100vw - 10px);
-        width: calc(100vw - 10px);
+        padding: 5px;
+        width: 100%;
+        max-width: 100%;
         box-sizing: border-box;
         overflow: hidden;
         margin: 0;
@@ -407,9 +407,11 @@ body {
     
     .right-panel {
         order: 2;
-        max-height: 180px;
-        min-height: 150px;
-        padding: 15px;
+        max-height: 160px;
+        min-height: 120px;
+        padding: 10px;
+        margin: 5px;
+        border-radius: 8px;
     }
 
     .game-title {
@@ -431,32 +433,75 @@ body {
         gap: 10px;
     }
     
-    /* Mobile-optimized tile sizing - viewport based for perfect fit */
+    /* Mobile-optimized tile sizing - fill entire grid cells */
     .tile {
-        width: calc((100vw - 50px) / 7);
-        height: calc((100vw - 50px) / 7);
-        max-width: calc((100vw - 50px) / 7);
-        max-height: calc((100vw - 50px) / 7);
-        min-width: calc((100vw - 50px) / 7);
-        min-height: calc((100vw - 50px) / 7);
-        border-width: 0.5px;
-        font-size: calc(0.5em + 1vw);
-        font-weight: bold;
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+        max-height: none !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        border-width: 0.5px !important;
+        font-size: calc(0.6em + 1vw) !important;
+        font-weight: bold !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+        flex-grow: 1 !important;
+    }
+    
+    /* Mobile spawn row styling */
+    #spawn-row {
+        display: grid !important;
+        grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+        grid-template-rows: minmax(0, 1fr) !important;
+        gap: 1px !important;
+        justify-content: stretch !important;
+        align-items: stretch !important;
+        justify-items: stretch !important;
+        align-content: stretch !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        aspect-ratio: 7/1 !important;
+        overflow: hidden !important;
+        padding: 0 !important;
+        margin: 5px 0 !important;
+        box-sizing: border-box !important;
+    }
+    
+    .spawn-tile {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+        max-height: none !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        border-width: 0.5px !important;
+        font-size: calc(0.6em + 1vw) !important;
+        font-weight: bold !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
     
     #game-board {
         display: grid !important;
-        grid-template-columns: repeat(7, calc((100vw - 50px) / 7)) !important;
-        grid-template-rows: repeat(6, calc((100vw - 50px) / 7)) !important;
+        grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+        grid-template-rows: repeat(6, minmax(0, 1fr)) !important;
         gap: 1px !important;
-        padding: 2px !important;
-        max-width: calc(100vw - 20px) !important;
-        width: calc(100vw - 20px) !important;
-        justify-content: center !important;
-        align-items: center !important;
-        overflow: hidden !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
         aspect-ratio: 7/6 !important;
-        margin: 0 auto !important;
+        justify-content: stretch !important;
+        align-items: stretch !important;
+        justify-items: stretch !important;
+        align-content: stretch !important;
+        overflow: hidden !important;
+        margin: 0 !important;
         box-sizing: border-box !important;
     }
     
@@ -468,22 +513,25 @@ body {
     
     #preview-container {
         display: grid !important;
-        grid-template-columns: repeat(7, calc((100vw - 50px) / 7)) !important;
-        grid-template-rows: 1fr !important;
+        grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+        grid-template-rows: minmax(0, 1fr) !important;
         gap: 1px !important;
-        justify-content: center !important;
-        align-items: center !important;
-        max-width: calc(100vw - 20px) !important;
-        width: calc(100vw - 20px) !important;
+        justify-content: stretch !important;
+        align-items: stretch !important;
+        justify-items: stretch !important;
+        align-content: stretch !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        aspect-ratio: 7/1 !important;
         overflow: hidden !important;
         padding: 0 !important;
-        margin: 0 auto !important;
+        margin: 0 !important;
         box-sizing: border-box !important;
     }
 
     #preview-container > div {
-        width: calc((100vw - 50px) / 7) !important;
-        height: calc((100vw - 50px) / 7) !important;
+        width: 100% !important;
+        height: 100% !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -491,14 +539,14 @@ body {
     }
 
     #preview-container .tile {
-        width: calc((100vw - 50px) / 7) !important;
-        height: calc((100vw - 50px) / 7) !important;
-        max-width: calc((100vw - 50px) / 7) !important;
-        max-height: calc((100vw - 50px) / 7) !important;
-        min-width: calc((100vw - 50px) / 7) !important;
-        min-height: calc((100vw - 50px) / 7) !important;
-        border-width: 1px !important;
-        font-size: calc(0.4em + 1vw) !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+        max-height: none !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        border-width: 0.5px !important;
+        font-size: calc(0.5em + 1vw) !important;
         font-weight: bold !important;
         box-sizing: border-box !important;
         margin: 0 !important;
@@ -507,14 +555,16 @@ body {
     
     .preview-panel {
         border-width: 2px !important;
-        padding: 8px !important;
-        margin-bottom: 8px !important;
+        padding: 5px !important;
+        margin-bottom: 5px !important;
         overflow: hidden !important;
-        width: calc(100vw - 20px) !important;
-        max-width: calc(100vw - 20px) !important;
+        width: 100% !important;
+        max-width: 100% !important;
         box-sizing: border-box !important;
         background-color: rgba(76, 175, 80, 0.15) !important;
     }
+    
+
     
     .preview-panel::before {
         content: "Next Up" !important;
@@ -530,6 +580,13 @@ body {
         border: 1px solid #ffffff !important;
         box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
         z-index: 10 !important;
+    }
+    
+    /* Force equal width columns on mobile */
+    #game-board > .tile,
+    #preview-container > div {
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
     }
 }
 
