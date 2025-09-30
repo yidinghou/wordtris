@@ -433,27 +433,31 @@ body {
     
     /* Mobile-optimized tile sizing - viewport based for perfect fit */
     .tile {
-        width: calc((100vw - 30px) / 7);
-        height: calc((100vw - 30px) / 7);
-        max-width: calc((100vw - 30px) / 7);
-        max-height: calc((100vw - 30px) / 7);
-        min-width: calc((100vw - 30px) / 7);
-        min-height: calc((100vw - 30px) / 7);
+        width: calc((100vw - 50px) / 7);
+        height: calc((100vw - 50px) / 7);
+        max-width: calc((100vw - 50px) / 7);
+        max-height: calc((100vw - 50px) / 7);
+        min-width: calc((100vw - 50px) / 7);
+        min-height: calc((100vw - 50px) / 7);
         border-width: 0.5px;
         font-size: calc(0.5em + 1vw);
         font-weight: bold;
     }
     
     #game-board {
-        grid-template-columns: repeat(7, calc((100vw - 30px) / 7));
-        grid-template-rows: repeat(6, calc((100vw - 30px) / 7));
-        gap: 1px;
-        padding: 2px;
-        max-width: 100vw;
-        width: calc(100vw - 10px);
-        justify-content: center;
-        overflow: hidden;
-        aspect-ratio: 7/6;
+        display: grid !important;
+        grid-template-columns: repeat(7, calc((100vw - 50px) / 7)) !important;
+        grid-template-rows: repeat(6, calc((100vw - 50px) / 7)) !important;
+        gap: 1px !important;
+        padding: 2px !important;
+        max-width: calc(100vw - 20px) !important;
+        width: calc(100vw - 20px) !important;
+        justify-content: center !important;
+        align-items: center !important;
+        overflow: hidden !important;
+        aspect-ratio: 7/6 !important;
+        margin: 0 auto !important;
+        box-sizing: border-box !important;
     }
     
     .preview-panel {
@@ -463,24 +467,69 @@ body {
     }
     
     #preview-container {
-        grid-template-columns: repeat(7, calc((100vw - 30px) / 7));
-        gap: 1px;
-        justify-content: center;
-        max-width: 100vw;
-        width: calc(100vw - 10px);
-        overflow: hidden;
+        display: grid !important;
+        grid-template-columns: repeat(7, calc((100vw - 50px) / 7)) !important;
+        grid-template-rows: 1fr !important;
+        gap: 1px !important;
+        justify-content: center !important;
+        align-items: center !important;
+        max-width: calc(100vw - 20px) !important;
+        width: calc(100vw - 20px) !important;
+        overflow: hidden !important;
+        padding: 0 !important;
+        margin: 0 auto !important;
+        box-sizing: border-box !important;
+    }
+
+    #preview-container > div {
+        width: calc((100vw - 50px) / 7) !important;
+        height: calc((100vw - 50px) / 7) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-sizing: border-box !important;
     }
 
     #preview-container .tile {
-        width: calc((100vw - 30px) / 7);
-        height: calc((100vw - 30px) / 7);
-        max-width: calc((100vw - 30px) / 7);
-        max-height: calc((100vw - 30px) / 7);
-        min-width: calc((100vw - 30px) / 7);
-        min-height: calc((100vw - 30px) / 7);
-        border-width: 0.5px;
-        font-size: calc(0.5em + 1vw);
-        font-weight: bold;
+        width: calc((100vw - 50px) / 7) !important;
+        height: calc((100vw - 50px) / 7) !important;
+        max-width: calc((100vw - 50px) / 7) !important;
+        max-height: calc((100vw - 50px) / 7) !important;
+        min-width: calc((100vw - 50px) / 7) !important;
+        min-height: calc((100vw - 50px) / 7) !important;
+        border-width: 1px !important;
+        font-size: calc(0.4em + 1vw) !important;
+        font-weight: bold !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .preview-panel {
+        border-width: 2px !important;
+        padding: 8px !important;
+        margin-bottom: 8px !important;
+        overflow: hidden !important;
+        width: calc(100vw - 20px) !important;
+        max-width: calc(100vw - 20px) !important;
+        box-sizing: border-box !important;
+        background-color: rgba(76, 175, 80, 0.15) !important;
+    }
+    
+    .preview-panel::before {
+        content: "Next Up" !important;
+        position: absolute !important;
+        top: 0px !important;
+        left: 10px !important;
+        background-color: #4CAF50 !important;
+        color: white !important;
+        padding: 2px 8px !important;
+        font-size: 0.9em !important;
+        font-weight: bold !important;
+        border-radius: 4px !important;
+        border: 1px solid #ffffff !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
+        z-index: 10 !important;
     }
 }
 
