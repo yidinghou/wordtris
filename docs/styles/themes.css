@@ -1,0 +1,59 @@
+/* Base theme (default) */
+:root {
+  --game-board-color: #343232;
+  --tile-background: #fafafa;
+  --tile-text-color: #313133;
+  --falling-tile-background: #358cca; /* Darker version for dropping tiles */
+  --falling-tile-text-color: #313133; /* Text color for dropping tiles */
+}
+
+body.theme-red {
+  --game-board-color: #ff3333;
+  --tile-background: #ffe0e0;
+  --tile-text-color: #000000;
+  --falling-tile-background: #350cca; /* Darker red for dropping tiles */
+  --falling-tile-text-color: #ffffff; /* Text color for dropping tiles */
+}
+
+body.theme-blue {
+  --game-board-color: #3333ff;
+  --tile-background: #e0e0ff;
+  --tile-text-color: #000000;
+  --falling-tile-background: #4f3939; /* Darker blue for dropping tiles */
+  --falling-tile-text-color: #ffffff; /* Text color for dropping tiles */
+}
+
+/* Apply theme variables to elements */
+#game-container {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+#game-board {
+  background-color: var(--game-board-color);
+}
+
+.tile {
+  background-color: var(--tile-background);
+  color: var(--tile-text-color);
+  transition:
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* Style for dropping tiles */
+.tile.falling {
+  background-color: var(--falling-tile-background);
+  color: var(--falling-tile-text-color);
+  z-index: 10;
+}
+
+.tile.locked {
+  background-color: gray; /* Ensure only locked tiles are gray */
+  color: white; /* Set text color to white */
+}
+
+.tile.highlight {
+  background-color: #34b233; /* Highlight color for tiles forming a word */
+  color: white; /* Ensure text is readable on the highlight color */
+}
