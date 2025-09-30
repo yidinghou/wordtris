@@ -161,7 +161,7 @@ export class GameController {
       this.inputController.disable();
 
       // Play the tile drop sound
-      const dropSound = new Audio('./src/tile-drop.mp3');
+      const dropSound = new Audio('./src/sounds/tile-drop.mp3');
       dropSound.play();
  
       // Clear the spawn tile immediately when dropping starts
