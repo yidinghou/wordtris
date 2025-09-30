@@ -17,17 +17,15 @@
     </header>
     
     <div class="main-container">
-        <!-- Left panel: Next Letters -->
-        <div class="left-panel">
-            <div class="panel-title">Next Letters</div>
-            <div id="preview-container" class="next-tiles"></div>
-            <div class="noodle-container">
-                <img src="../noodle-macaroni-svgrepo-com.svg" alt="Cartoon Noodle" class="cartoon-noodle" width="80" height="80" />
-            </div>
-        </div>
-
-        <!-- Center: Game Board -->
+        <!-- Game Board with integrated horizontal next tiles panel -->
         <div class="game-board">
+            <div class="next-tiles-horizontal">
+                <div class="noodle-container">
+                    <img src="../noodle-macaroni-svgrepo-com.svg" alt="Cartoon Noodle" class="cartoon-noodle" width="60" height="60" />
+                </div>
+                <div class="panel-title">Next Letters</div>
+                <div id="preview-container" class="next-tiles"></div>
+            </div>
             <div class="game-board-container">
                 <div id="spawn-row"></div>
                 <div id="game-board"></div>
