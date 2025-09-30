@@ -85,4 +85,30 @@ export class UI {
     clearSpawnRow() {
         this.updateSpawnRow();
     }
+
+    /**
+     * Updates the spawn row with a simple drop-in animation from the preview area.
+     * 
+     * @param {number} col - The column index to highlight
+     * @param {string} letter - The letter to display in the highlighted column
+     */
+    updateSpawnRowWithDrop(col, letter) {
+        // Clear all spawn tiles first
+        this.updateSpawnRow();
+        
+        // Set the new active tile with drop-in animation
+        if (col !== undefined && letter) {
+            const spawnTile = document.querySelector(`.spawn-tile[data-col='${col}']`);
+            if (spawnTile) {
+                spawnTile.textContent = letter;
+                spawnTile.classList.add('spawn-row-active', 'spawn-drop-in');
+                spawnTile.style.visibility = 'visible';
+                
+                // Clean up animation class after animation completes
+                setTimeout(() => {
+                    spawnTile.classList.remove('spawn-drop-in');
+                }, 400);
+            }
+        }
+    }
 }

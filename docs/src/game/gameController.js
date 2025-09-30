@@ -171,8 +171,12 @@ export class GameController {
         this.wordValidator.checkWords(this.game, this.board, targetRow, col, this.handleWordFound.bind(this));
 
         if (!this.wordValidator.wordFound) {
-          this.ui.updateSpawnRow(col, this.tileGenerator.tiles[this.tileGenerator.currentIndex]);
-          this.glowSpawnTile(col);
+          this.ui.updateSpawnRowWithDrop(col, this.tileGenerator.tiles[this.tileGenerator.currentIndex]);
+          
+          // Delay the glow effect to happen after the drop-in animation
+          setTimeout(() => {
+            this.glowSpawnTile(col);
+          }, 400);
         }
 
         this.updatePreviewAndCounter();

@@ -359,6 +359,17 @@ body {
   100% { box-shadow: 0 0 0 0px #ffd700, 0 0 0 0px #fffbe7; }
 }
 
+/* Simple drop-in animation for spawn tiles */
+@keyframes dropIn {
+  0% { transform: translateY(-50px); opacity: 0; scale: 0.8; }
+  50% { transform: translateY(0); opacity: 1; scale: 1.1; }
+  100% { transform: translateY(0); opacity: 1; scale: 1; }
+}
+
+.spawn-drop-in {
+  animation: dropIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
 /* Improved Mobile Responsive Design */
 @media (max-width: 768px) {
     body {
