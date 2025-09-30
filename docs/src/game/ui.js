@@ -50,13 +50,20 @@ export class UI {
         for (let col = 0; col < 7; col++) {
             const gridCell = document.createElement('div');
             
-            // Only add tiles to columns 0, 1, and 2 (positions 1, 2, 3)
-            if (col >= 1 && col <= 3 && (col - 1) < letterQueue.length) {
+            // Only add tiles to columns 1, 2, and 3 (positions 2, 3, 4)
+            // Map so that column 3 shows the NEXT tile (letterQueue[0])
+            if (col >= 1 && col <= 3 && letterQueue.length >= 3) {
                 const previewTile = document.createElement('div');
                 previewTile.classList.add('tile', 'preview-tile');
-                previewTile.textContent = letterQueue[col - 1];
                 
-                // Add special class for the third tile (column 3, next tile)
+                // Reverse the mapping so column 3 gets the next tile (index 0)
+                // Column 1 = letterQueue[2] (3rd next)
+                // Column 2 = letterQueue[1] (2nd next)  
+                // Column 3 = letterQueue[0] (1st next - immediate next tile)
+                const queueIndex = 3 - col;
+                previewTile.textContent = letterQueue[queueIndex];
+                
+                // Add special class for column 3 (the immediate next tile)
                 if (col === 3) {
                     previewTile.classList.add('next-tile-highlight');
                 }
