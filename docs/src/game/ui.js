@@ -93,6 +93,9 @@ export class UI {
      * @param {string} letter - The letter to display in the highlighted column
      */
     updateSpawnRowWithDrop(col, letter) {
+        // Trigger preview nudge animation first
+        this.animatePreviewNudge();
+        
         // Clear all spawn tiles first
         this.updateSpawnRow();
         
@@ -109,6 +112,26 @@ export class UI {
                     spawnTile.classList.remove('spawn-drop-in');
                 }, 400);
             }
+        }
+    }
+
+    /**
+     * Animates the preview panel to nudge right, simulating tiles moving down
+     */
+    animatePreviewNudge() {
+        const previewContent = document.querySelector('.preview-content');
+        const noodleIcon = document.querySelector('.noodle-icon');
+        
+        if (previewContent && noodleIcon) {
+            // Add animation classes
+            previewContent.classList.add('animate-nudge');
+            noodleIcon.classList.add('animate-nudge');
+            
+            // Remove animation classes after animation completes
+            setTimeout(() => {
+                previewContent.classList.remove('animate-nudge');
+                noodleIcon.classList.remove('animate-nudge');
+            }, 600);
         }
     }
 }
