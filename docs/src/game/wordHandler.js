@@ -204,9 +204,10 @@ export class WordHandler {
       } else {
         // Center above if no space on sides
         tooltip.style.left = `${rect.left + rect.width / 2 - tooltipWidth / 2}px`;
-        tooltip.style.top = `${rect.top - tooltip.offsetHeight - 10}px`;
-        tooltip.style.transform = 'translateX(0)';
+        tooltip.style.top = `${rect.top - tooltip.offsetHeight - 12}px`;
+        tooltip.style.transform = 'translateX(-50%)';
         tooltip.classList.remove('left');
+        tooltip.classList.add('top');
         return;
       }
       
@@ -214,43 +215,135 @@ export class WordHandler {
     }
 
     let tooltipTimeout;
+    let isTooltipVisible = false;
+    let touchStarted = false;
     
-    // Show tooltip on mouseover/touch
+    // Enhanced tooltip positioning with error handling
+    const positionTooltipSafe = () => {
+      try {
+        positionTooltip();
+      } catch (error) {
+        console.warn('Tooltip positioning error:', error);
+        // Fallback positioning
+        if (window.innerWidth <= 768) {
+          return; // Mobile CSS handles positioning
+        }
+        const rect = btn.getBoundingClientRect();
+        tooltip.style.left = `${rect.right + 10}px`;
+        tooltip.style.top = `${rect.top + rect.height / 2}px`;
+        tooltip.style.transform = 'translateY(-50%)';
+      }
+    };
+    
+    // Show tooltip with loading state
     const showTooltip = () => {
       clearTimeout(tooltipTimeout);
-      positionTooltip();
-      tooltip.classList.add('visible');
-      btn.style.background = '#e7e7e7';
+      
+      if (isTooltipVisible) return;
+      
+      isTooltipVisible = true;
+      tooltip.classList.add('loading');
+      
+      // Brief delay to show loading state
+      setTimeout(() => {
+        tooltip.classList.remove('loading');
+        positionTooltipSafe();
+        tooltip.classList.add('visible');
+        btn.style.background = '#e0e0e0';
+        btn.style.transform = 'scale(1.02)';
+        
+        // Add focus for screen readers
+        btn.setAttribute('aria-expanded', 'true');
+      }, 50);
     };
     
     const hideTooltip = () => {
-      tooltip.classList.remove('visible');
+      isTooltipVisible = false;
+      tooltip.classList.remove('visible', 'loading');
       btn.style.background = '#f7f7f7';
+      btn.style.transform = 'scale(1)';
+      btn.setAttribute('aria-expanded', 'false');
+      clearTimeout(tooltipTimeout);
     };
     
-    // Desktop hover events
-    btn.addEventListener('mouseover', showTooltip);
-    btn.addEventListener('mouseleave', hideTooltip);
-    
-    // Mobile touch events
-    btn.addEventListener('touchstart', (e) => {
-      e.preventDefault();
-      showTooltip();
-      // Auto-hide after 3 seconds on mobile
-      tooltipTimeout = setTimeout(hideTooltip, 3000);
+    // Desktop hover events with delay
+    btn.addEventListener('mouseenter', () => {
+      if (!touchStarted) {
+        tooltipTimeout = setTimeout(showTooltip, 200); // Small delay for better UX
+      }
     });
     
-    // Hide on touch outside
-    document.addEventListener('touchstart', (e) => {
-      if (!btn.contains(e.target) && !tooltip.contains(e.target)) {
+    btn.addEventListener('mouseleave', () => {
+      clearTimeout(tooltipTimeout);
+      if (!touchStarted) {
         hideTooltip();
       }
     });
-
-    // Remove tooltip from DOM when button is removed
-    btn.addEventListener('remove', () => {
-      if (tooltip.parentNode) tooltip.parentNode.removeChild(tooltip);
+    
+    // Enhanced mobile touch events
+    btn.addEventListener('touchstart', (e) => {
+      touchStarted = true;
+      clearTimeout(tooltipTimeout);
+      
+      if (isTooltipVisible) {
+        hideTooltip();
+      } else {
+        showTooltip();
+        // Auto-hide after 4 seconds on mobile with longer text
+        const autoHideDelay = tooltipText.length > 50 ? 5000 : 4000;
+        tooltipTimeout = setTimeout(hideTooltip, autoHideDelay);
+      }
+      
+      // Reset touch flag after a delay
+      setTimeout(() => { touchStarted = false; }, 500);
     });
+    
+    // Hide on touch/click outside with improved detection
+    const hideOnOutsideInteraction = (e) => {
+      if (isTooltipVisible && !btn.contains(e.target) && !tooltip.contains(e.target)) {
+        hideTooltip();
+      }
+    };
+    
+    document.addEventListener('touchstart', hideOnOutsideInteraction);
+    document.addEventListener('click', hideOnOutsideInteraction);
+    
+    // Keyboard accessibility
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (isTooltipVisible) {
+          hideTooltip();
+        } else {
+          showTooltip();
+          tooltipTimeout = setTimeout(hideTooltip, 3000);
+        }
+      } else if (e.key === 'Escape') {
+        hideTooltip();
+      }
+    });
+    
+    // Accessibility attributes
+    btn.setAttribute('aria-haspopup', 'true');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('role', 'button');
+    btn.setAttribute('tabindex', '0');
+
+    // Enhanced cleanup function
+    const cleanupTooltip = () => {
+      clearTimeout(tooltipTimeout);
+      document.removeEventListener('touchstart', hideOnOutsideInteraction);
+      document.removeEventListener('click', hideOnOutsideInteraction);
+      if (tooltip.parentNode) {
+        tooltip.parentNode.removeChild(tooltip);
+      }
+    };
+    
+    // Remove tooltip from DOM when button is removed
+    btn.addEventListener('remove', cleanupTooltip);
+    
+    // Store cleanup function for manual removal if needed
+    btn._tooltipCleanup = cleanupTooltip;
 
     // Insert at the beginning
     madeWordsList.insertBefore(btn, madeWordsList.firstChild);
