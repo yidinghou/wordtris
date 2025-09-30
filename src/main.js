@@ -1,12 +1,10 @@
-import { Game } from './modules/game.js'
-import { Board } from './modules/board.js'
-import { LetterQueue } from './modules/letterQueue.js'
-import { TileGenerator } from './modules/tileGenerator.js' // Using TileGenerator instead
-import * as UI from './modules/ui.js'
-import * as Animations from './modules/animations.js'
-import * as WordValidator from './modules/wordValidator.js'
-import * as InputController from './modules/inputController.js'
-import * as Scoring from './modules/scoring.js'
+import { Board } from './game/board.js'
+import { TileGenerator } from './game/tileGenerator.js'
+import { UI } from './game/ui.js'
+import { Animations } from './game/animation.js'
+import { WordValidator } from './game/wordValidator.js'
+import { InputController } from './game/inputController.js'
+import { Scoring } from './game/scoring.js'
 
 // Initialize DOM elements
 const gameBoard = document.getElementById('game-board');
@@ -15,14 +13,54 @@ const previewContainer = document.getElementById('preview-container');
 const madeWordsList = document.getElementById('made-words-list');
 
 // Initialize game components
-const game = new Game();
+// Simple game state object to replace Game class
+const game = {
+  rows: 8,
+  cols: 7,
+  board: Array(8).fill(null).map(() => Array(7).fill(null)),
+  
+  getTile(row, col) {
+    return this.board[row] && this.board[row][col] ? this.board[row][col] : null;
+  },
+  
+  setTile(row, col, letter) {
+    if (this.board[row]) {
+      this.board[row][col] = letter;
+    }
+  },
+  
+  clearTile(row, col) {
+    if (this.board[row]) {
+      this.board[row][col] = null;
+    }
+  },
+  
+  isColumnFull(col) {
+    return this.board[0][col] !== null;
+  },
+  
+  dropTile(col, letter) {
+    for (let row = this.rows - 1; row >= 0; row--) {
+      if (!this.board[row][col]) {
+        this.board[row][col] = letter;
+        return row;
+      }
+    }
+    return -1;
+  },
+  
+  resetBoard() {
+    this.board = Array(8).fill(null).map(() => Array(7).fill(null));
+  }
+};
+
 const board = new Board(game, gameBoard, spawnRow);
-const letterQueue = new LetterQueue();
 const tileGenerator = new TileGenerator(100);
 const ui = new UI(previewContainer);
 const wordValidator = new WordValidator();
 const inputController = new InputController();
 const scoring = new Scoring();
+const animations = new Animations();
 
 // Initialize UI
 ui.updatePreview(tileGenerator.tiles.slice(0, 3)); // Show First 3 in preview
@@ -73,7 +111,7 @@ gameBoard.addEventListener('click', e => {
           wordValidator.checkWords(game, board, row, col, handleWordFound);
 
           // Re-enable input if no words were formed
-          if (!WordValidator.wordFound) {
+          if (!wordValidator.wordFound) {
             // Only update spawn row if no word was found
             ui.updateSpawnRow(col, tileGenerator.tiles[tileGenerator.currentIndex]);
             glowSpawnTile(col);
@@ -242,7 +280,7 @@ function checkForNewWords() { // 411
   for (let r = 0; r < game.rows; r++) {
     for (let c = 0; c < game.cols; c++) {
       if (game.getTile(r, c)) {
-        if (WordValidator.checkWords(game, board, r, c, handleWordFound)) {
+        if (wordValidator.checkWords(game, board, r, c, handleWordFound)) {
           wordsFound = true;
           break; // Exit the loop as handleWordFound will trigger checkForNewWords again after animation
         }
