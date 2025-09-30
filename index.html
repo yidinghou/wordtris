@@ -8,23 +8,28 @@
     <link rel="stylesheet" href="styles/themes.css">
 </head>
 <body>
-    <div class="container">
-        <h2 class="title">Next Letters</h2>
-        <div id="preview-container"></div>
-    </div>
-
-    <div class="game-area">
-        <div class="score-container">
-            <h2 id="score">Score: <span>0</span></h2>
-            <h2 id="letters-remaining-container">Ltrs Remaining: <span id="letters-remaining-counter">100</span></h2>
+    <div class="main-layout">
+        <!-- Left side: Next Letters -->
+        <div class="left-panel">
+            <h2 class="title">Next Letters</h2>
+            <div id="preview-container"></div>
         </div>
-        <div id="spawn-row"></div>
-        <div id="game-board"></div>
-    </div>
 
-    <div class="words-container">
-        <h2 class="title">Made Words List</h2>
-        <div id="made-words-list"></div>
+        <!-- Center: Game Area -->
+        <div class="game-area">
+            <div class="score-container">
+                <h2 id="score">Score: <span>0</span></h2>
+                <h2 id="letters-remaining-container">Letters Remaining: <span id="letters-remaining-counter">100</span></h2>
+            </div>
+            <div id="spawn-row"></div>
+            <div id="game-board"></div>
+        </div>
+
+        <!-- Right side: Made Words List -->
+        <div class="right-panel">
+            <h2 class="title">Made Words List</h2>
+            <div id="made-words-list"></div>
+        </div>
     </div>
 
     <script type="module" src="./src/main.js"></script>
