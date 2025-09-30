@@ -452,6 +452,41 @@ body {
         flex-grow: 1 !important;
     }
     
+    /* Mobile spawn row styling */
+    #spawn-row {
+        display: grid !important;
+        grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+        grid-template-rows: minmax(0, 1fr) !important;
+        gap: 1px !important;
+        justify-content: stretch !important;
+        align-items: stretch !important;
+        justify-items: stretch !important;
+        align-content: stretch !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        aspect-ratio: 7/1 !important;
+        overflow: hidden !important;
+        padding: 0 !important;
+        margin: 5px 0 !important;
+        box-sizing: border-box !important;
+    }
+    
+    .spawn-tile {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+        max-height: none !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        border-width: 0.5px !important;
+        font-size: calc(0.6em + 1vw) !important;
+        font-weight: bold !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
     #game-board {
         display: grid !important;
         grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
@@ -528,6 +563,8 @@ body {
         box-sizing: border-box !important;
         background-color: rgba(76, 175, 80, 0.15) !important;
     }
+    
+
     
     .preview-panel::before {
         content: "Next Up" !important;
