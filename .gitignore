@@ -147,7 +147,7 @@ dist/
 .local/
 
 # CSV files (keeping your original entry)
-*.csv
+# *.csv
 
 # Game specific files (optional - uncomment if needed)
 # saves/
