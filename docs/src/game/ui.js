@@ -46,12 +46,26 @@ export class UI {
         // Clear previous preview tiles
         this.previewContainer.innerHTML = '';
 
-        letterQueue.forEach(letter => {
-            const previewTile = document.createElement('div');
-            previewTile.classList.add('tile', 'preview-tile'); // Use base 'tile' class for styling
-            previewTile.textContent = letter;
-            this.previewContainer.appendChild(previewTile);
-        });
+        // Create 7 empty grid cells to match game board columns
+        for (let col = 0; col < 7; col++) {
+            const gridCell = document.createElement('div');
+            
+            // Only add tiles to columns 0, 1, and 2 (positions 1, 2, 3)
+            if (col < 3 && col < letterQueue.length) {
+                const previewTile = document.createElement('div');
+                previewTile.classList.add('tile', 'preview-tile');
+                previewTile.textContent = letterQueue[col];
+                
+                // Add special class for the third tile (column 2, next tile)
+                if (col === 2) {
+                    previewTile.classList.add('next-tile-highlight');
+                }
+                
+                gridCell.appendChild(previewTile);
+            }
+            
+            this.previewContainer.appendChild(gridCell);
+        }
     }
 
     /**
