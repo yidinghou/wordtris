@@ -8,37 +8,40 @@
     <link rel="stylesheet" href="styles/themes.css">
 </head>
 <body>
-    <div class="main-layout">
-        <!-- Left side: Next Letters -->
+    <header class="game-header">
+        <h1 class="game-title">Noodel 🍝</h1>
+        <div class="score-container">
+            <h2 id="score">Score: <span>0</span></h2>
+            <h2 id="letters-remaining-container">Letters Remaining: <span id="letters-remaining-counter">100</span></h2>
+        </div>
+    </header>
+    
+    <div class="main-container">
+        <!-- Left panel: Next Letters -->
         <div class="left-panel">
-            <div class="panel-container">
-                <h2 class="panel-title">Next Letters</h2>
-                <div id="preview-container" class="content-area"></div>
+            <div class="panel-title">Next Letters</div>
+            <div id="preview-container" class="next-tiles"></div>
+            <div class="cat-container">
+                <img src="../noodle-macaroni-svgrepo-com.svg" alt="Cartoon Noodle" class="cartoon-cat" width="80" height="80" />
             </div>
         </div>
 
-        <!-- Center: Game Area -->
-        <div class="game-area">
-            <h1 class="game-title">Noodel 🍝</h1>
-            <div class="score-container">
-                <h2 id="score">Score: <span>0</span></h2>
-                <h2 id="letters-remaining-container">Letters Remaining: <span id="letters-remaining-counter">100</span></h2>
-            </div>
+        <!-- Center: Game Board -->
+        <div class="game-board">
             <div class="game-board-container">
                 <div id="spawn-row"></div>
                 <div id="game-board"></div>
             </div>
         </div>
 
-        <!-- Right side: Made Words List -->
+        <!-- Right panel: Made Words -->
         <div class="right-panel">
-            <div class="panel-container">
-                <h2 class="panel-title">Made Words</h2>
-                <div id="made-words-list" class="content-area"></div>
-            </div>
+            <div class="panel-title">Made Words</div>
+            <div id="made-words-list" class="made-words"></div>
         </div>
     </div>
 
+    <script src="../src/cat-animation.js"></script>
     <script type="module" src="./src/main.js"></script>
 </body>
 </html>
