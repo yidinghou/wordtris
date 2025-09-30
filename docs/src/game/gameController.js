@@ -160,6 +160,10 @@ export class GameController {
     if (targetRow !== -1) {
       this.inputController.disable();
 
+      // Play the tile drop sound
+      const dropSound = new Audio('./src/tile-drop.mp3');
+      dropSound.play();
+ 
       // Clear the spawn tile immediately when dropping starts
       this.ui.clearSpawnRow();
 
