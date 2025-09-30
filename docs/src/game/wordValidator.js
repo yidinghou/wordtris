@@ -29,7 +29,7 @@ export class WordValidator {
      */
     async loadWords() {
         try {
-            const response = await fetch('../../dict.csv');
+            const response = await fetch('./dict.csv');
             const data = await response.text();
             
             this.validWords = [];
