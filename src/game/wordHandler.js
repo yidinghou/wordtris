@@ -150,31 +150,48 @@ export class WordHandler {
       btn.classList.remove('new-word-animate');
     }, { once: true });
 
-    // Tooltip element (now appended to document body)
+    // Tooltip element (positioned to the right of the button)
     const tooltip = document.createElement('div');
     tooltip.classList.add('word-tooltip');
-    tooltip.textContent = 'Click to remove';
+    
+    // Get definition from dictionary
+    const definition = this.gameController.wordValidator.getDefinition(word.toLowerCase());
+    const tooltipText = `${definition}`;
+    
+    tooltip.textContent = tooltipText;
     tooltip.style.visibility = 'hidden';
     tooltip.style.opacity = '0';
     tooltip.style.position = 'absolute';
     tooltip.style.zIndex = '1001';
-    tooltip.style.padding = '5px';
-    tooltip.style.background = 'black';
+    tooltip.style.padding = '8px 12px';
+    tooltip.style.background = 'rgba(0, 0, 0, 0.9)';
     tooltip.style.color = 'white';
-    tooltip.style.borderRadius = '4px';
-    tooltip.style.bottom = '100%'; // Position above button
-    tooltip.style.left = '50%';
-    tooltip.style.transform = 'translateX(-50%)';
-    tooltip.style.transition = 'opacity 0.2s, visibility 0.2s';
-    tooltip.style.whiteSpace = 'nowrap';
-    document.body.appendChild(tooltip); // Append to body so it floats above all
+    tooltip.style.borderRadius = '6px';
+    tooltip.style.fontSize = '0.75em';
+    tooltip.style.fontWeight = '500';
+    tooltip.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2)';
+    tooltip.style.transition = 'opacity 0.2s, visibility 0.2s, transform 0.2s';
+    tooltip.style.whiteSpace = 'normal';
+    tooltip.style.maxWidth = '300px';
+    tooltip.style.lineHeight = '1.3';
+    tooltip.style.pointerEvents = 'none'; // Prevent tooltip from interfering with mouse events
+    document.body.appendChild(tooltip);
 
-    // Calculate tooltip position relative to the button
+    // Calculate tooltip position to the right of the button
     function positionTooltip() {
       const rect = btn.getBoundingClientRect();
-      tooltip.style.left = `${rect.left + rect.width / 2}px`;
-      tooltip.style.top = `${rect.top - tooltip.offsetHeight - 5}px`;
-      tooltip.style.transform = 'translateX(-50%)';
+      const tooltipWidth = tooltip.offsetWidth || 100; // Fallback width
+      const rightSpace = window.innerWidth - rect.right;
+      
+      // Position to the right if there's enough space, otherwise to the left
+      if (rightSpace > tooltipWidth + 10) {
+        tooltip.style.left = `${rect.right + 10}px`;
+        tooltip.style.transform = 'translateY(-50%) translateX(0)';
+      } else {
+        tooltip.style.left = `${rect.left - tooltipWidth - 10}px`;
+        tooltip.style.transform = 'translateY(-50%) translateX(0)';
+      }
+      tooltip.style.top = `${rect.top + rect.height / 2}px`;
     }
 
     // Show tooltip on mouseover

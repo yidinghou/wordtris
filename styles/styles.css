@@ -45,15 +45,9 @@ h1 {
   margin: 20px 0;
 }
 
-/* Game board styles */
+/* Game board styles - grid layout set programmatically by Board class */
 #game-board {
-  display: grid;
-  grid-template-columns: repeat(7, 60px);
-  grid-template-rows: repeat(8, 60px);
-  gap: 5px;
-  justify-content: center;
-  margin: 20px auto;
-  background-color: var(--game-board-color); /* Add this line */
+  background-color: var(--game-board-color);
   padding: 10px;
   border-radius: 10px;
 }
@@ -179,7 +173,7 @@ h1 {
   }
   
   #game-board {
-    grid-template-columns: repeat(7, 45px);
+    grid-template-columns: repeat(6, 45px);
     grid-template-rows: repeat(8, 45px);
   }
   

@@ -1,3 +1,5 @@
+import { GameConfig } from './gameConfig.js';
+
 /**
  * Represents the visual game board and handles all DOM manipulation
  * related to the tiles and their containers.
@@ -31,7 +33,8 @@ export class Board {
     createGameBoard() {
         // Set up the main game board container styles (CSS Grid)
         this.gameBoard.style.display = 'grid';
-        this.gameBoard.style.gridTemplateColumns = `repeat(${this.game.cols}, 60px)`;
+        this.gameBoard.style.gridTemplateColumns = `repeat(${this.game.cols}, ${GameConfig.TILE_SIZE}px)`;
+        this.gameBoard.style.gridTemplateRows = `repeat(${this.game.rows}, ${GameConfig.TILE_SIZE}px)`;
         this.gameBoard.style.gap = '5px';
         this.gameBoard.style.justifyContent = 'center';
         this.gameBoard.style.margin = '0 auto 10px';
@@ -62,7 +65,7 @@ export class Board {
 
         // Set up the spawn row container styles (CSS Grid, matching the board)
         this.spawnRow.style.display = 'grid';
-        this.spawnRow.style.gridTemplateColumns = `repeat(${this.game.cols}, 60px)`;
+        this.spawnRow.style.gridTemplateColumns = `repeat(${this.game.cols}, ${GameConfig.TILE_SIZE}px)`;
         this.spawnRow.style.gap = '5px';
         this.spawnRow.style.justifyContent = 'center';
         this.spawnRow.style.margin = '0 auto 10px';

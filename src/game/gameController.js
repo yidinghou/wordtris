@@ -5,6 +5,8 @@ import { WordValidator } from './wordValidator.js';
 import { InputController } from './inputController.js';
 import { Scoring } from './scoring.js';
 import { Animations } from './animation.js';
+import { GameConfig } from './gameConfig.js';
+import { createEmptyBoard, findDropRow } from '../utils/gameUtils.js';
 
 /**
  * Main game controller that orchestrates all game components and handles user interactions
@@ -25,11 +27,11 @@ export class GameController {
   }
 
   initializeGameComponents() {
-    // Game state object
+    // Game state object using configuration
     this.game = {
-      rows: 8,
-      cols: 7,
-      board: Array(8).fill(null).map(() => Array(7).fill(null)),
+      rows: GameConfig.ROWS,
+      cols: GameConfig.COLS,
+      board: createEmptyBoard(),
       
       getTile(row, col) {
         return this.board[row] && this.board[row][col] ? this.board[row][col] : null;
@@ -62,15 +64,15 @@ export class GameController {
       },
       
       resetBoard() {
-        this.board = Array(8).fill(null).map(() => Array(7).fill(null));
+        this.board = createEmptyBoard();
       }
     };
 
-    // Initialize components
+    // Initialize components with configuration
     this.board = new Board(this.game, this.gameBoard, this.spawnRow);
-    this.tileGenerator = new TileGenerator(100);
+    this.tileGenerator = new TileGenerator(GameConfig.TILE_COUNT);
     this.ui = new UI(this.previewContainer);
-    this.wordValidator = new WordValidator();
+    this.wordValidator = new WordValidator(GameConfig.MIN_WORD_LENGTH);
     this.inputController = new InputController();
     this.scoring = new Scoring();
     // Note: Animations uses static methods, no need to instantiate
@@ -87,9 +89,9 @@ export class GameController {
   }
 
   initializeUI() {
-    this.ui.updatePreview(this.tileGenerator.tiles.slice(0, 3));
+    this.ui.updatePreview(this.tileGenerator.tiles.slice(0, GameConfig.PREVIEW_COUNT));
     this.animatePreviewTiles();
-    document.body.classList.add('theme-red');
+    document.body.classList.add(GameConfig.DEFAULT_THEME);
     this.hideSpawnRowTiles();
     this.updateLettersRemainingCounter();
   }
@@ -153,15 +155,7 @@ export class GameController {
     }
 
     const letter = this.tileGenerator.getNextTile();
-    
-    // Find where the tile should land without actually placing it yet
-    let targetRow = -1;
-    for (let row = this.game.rows - 1; row >= 0; row--) {
-      if (!this.game.board[row][col]) {
-        targetRow = row;
-        break;
-      }
-    }
+    const targetRow = findDropRow(this.game.board, col);
 
     if (targetRow !== -1) {
       this.inputController.disable();
@@ -195,7 +189,10 @@ export class GameController {
 
   // Helper methods
   updatePreviewAndCounter() {
-    this.ui.updatePreview(this.tileGenerator.tiles.slice(this.tileGenerator.currentIndex + 1, this.tileGenerator.currentIndex + 4));
+    this.ui.updatePreview(this.tileGenerator.tiles.slice(
+      this.tileGenerator.currentIndex + 1, 
+      this.tileGenerator.currentIndex + 1 + GameConfig.PREVIEW_COUNT
+    ));
     this.animatePreviewTiles();
     this.updateLettersRemainingCounter();
   }
@@ -242,7 +239,7 @@ export class GameController {
       tile.classList.add('spawn-glow');
       setTimeout(() => {
         tile.classList.remove('spawn-glow');
-      }, 1000);
+      }, GameConfig.GLOW_DURATION);
     }
   }
 
