@@ -7,8 +7,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #1a1a2e;
-    color: #eee;
+    background-color: #ffffff;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -62,7 +61,7 @@ body {
     background-color: #f1f5fa;
     border-radius: 10px;
     padding: 20px;
-    border: 2px solid #e94560;
+    border: 2px solid #000000;
     display: flex;
     flex-direction: column;
 }
@@ -72,8 +71,8 @@ body {
     font-weight: bold;
     margin-bottom: 15px;
     text-align: center;
-    color: #e94560;
-    border-bottom: 2px solid #e94560;
+    color: #000000;
+    border-bottom: 2px solid #000000;
     padding-bottom: 10px;
 }
 
@@ -158,8 +157,8 @@ body {
 
 /* Game board container */
 .game-board-container {
-  background-color: #1a1a2e;
-  border: 2px solid #e94560;
+  background-color: #ffffff;
+  border: 2px solid #000000;
   border-radius: 8px;
   padding: 10px;
 }
@@ -230,7 +229,7 @@ body {
 
 /* Preview tiles positioned in columns 1, 2, and 3 */
 #preview-container .tile {
-    background-color: #0f3460;
+    background-color: #ffffff;
     border: 2px solid #e94560;
     border-radius: 8px;
     width: 60px;
@@ -240,14 +239,14 @@ body {
     justify-content: center;
     font-size: 1.1em;
     font-weight: bold;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 /* Highlight the next tile (third position) */
 .next-tile-highlight {
     border-color: #ffd700 !important;
     box-shadow: 0 0 10px rgba(255, 215, 0, 0.5) !important;
-    background-color: #2a5490 !important;
+    background-color: #ffffff !important;
 }
 
 /* Made words styling */
