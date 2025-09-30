@@ -12,6 +12,16 @@ export class WordHandler {
     console.log('Highlighting tiles for word');
     this.gameController.inputController.disable();
 
+    // Play a random sound when a word is made
+    const wordSounds = [
+      './src/sounds/word-made-1.mp3',
+      './src/sounds/word-made-2.mp3',
+      './src/sounds/word-made-3.mp3'
+    ];
+    const randomSound = wordSounds[Math.floor(Math.random() * wordSounds.length)];
+    const wordSound = new Audio(randomSound);
+    wordSound.play();
+
     // Immediately show the next tile in center column (column 3) when word is made with drop animation
     const centerCol = 3; // Center column for 7-column grid (0-indexed)
     this.gameController.ui.updateSpawnRowWithDrop(centerCol, this.gameController.tileGenerator.tiles[this.gameController.tileGenerator.currentIndex]);

@@ -257,10 +257,4 @@ export class GameController {
   clearMadeWordsList() {
     this.madeWordsList.innerHTML = '';
   }
-
-  // This will be bound to WordHandler instance
-  handleWordFound(tiles, word) {
-    // This method will be overridden by WordHandler
-    console.log('WordHandler not yet bound');
-  }
 }
