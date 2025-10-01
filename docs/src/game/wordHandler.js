@@ -8,19 +8,42 @@ export class WordHandler {
     this.gameController = gameController;
   }
 
-  handleWordFound(tiles, word) {
-    console.log('Highlighting tiles for word');
-    this.gameController.inputController.disable();
-
-    // Play a random sound when a word is made
+  playWordSound(wordLength) {
     const wordSounds = [
       './src/sounds/word-made-1.mp3',
       './src/sounds/word-made-2.mp3',
       './src/sounds/word-made-3.mp3'
     ];
-    const randomSound = wordSounds[Math.floor(Math.random() * wordSounds.length)];
+    let randomSound;
+    if (wordLength >= 4) {
+      const specialSound = './src/sounds/word-made-special.mp3';
+      const random = Math.random();
+      if (random < 0.4) {
+        randomSound = specialSound;
+      } else {
+        const regularIndex = Math.floor((random - 0.4) / 0.2);
+        randomSound = wordSounds[Math.min(regularIndex, wordSounds.length - 1)];
+      }
+    } else {
+      randomSound = wordSounds[Math.floor(Math.random() * wordSounds.length)];
+    }
     const wordSound = new Audio(randomSound);
     wordSound.play();
+  }
+
+  /**
+   * Main method to handle the event when a word is found
+   * @param {Array} tiles - The array of tiles that form the found word
+   * @param {string} word - The word that was found
+   */
+  handleWordFound(tiles, word) {
+    console.log('Highlighting tiles for word');
+    this.gameController.inputController.disable();
+
+    // Extract word length
+    const wordLength = word ? word.length : 
+      tiles.reduce((length, tile) => length + (tile.textContent?.length || 0), 0);
+    this.playWordSound(wordLength);
 
     // Immediately show the next tile in center column (column 3) when word is made with drop animation
     const centerCol = 3; // Center column for 7-column grid (0-indexed)
