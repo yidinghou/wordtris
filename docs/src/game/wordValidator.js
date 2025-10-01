@@ -224,6 +224,7 @@ export class WordValidator {
 
     /**
      * Finds all valid words (of minLength or greater) within a continuous string of letters.
+     * Checks from longest to shortest words first.
      * @param {string} letters - A string of letters (without spaces).
      * @returns {object[]} An array of word objects {word, startIndex}.
      */
@@ -232,7 +233,8 @@ export class WordValidator {
         const letterString = letters.toLowerCase();
 
         for (let i = 0; i < letterString.length; i++) {
-            for (let j = i + this.minWordLength; j <= letterString.length; j++) {
+            // Check from longest possible word down to minimum length
+            for (let j = letterString.length; j >= i + this.minWordLength; j--) {
                 const subString = letterString.substring(i, j);
 
                 if (this.validWords.includes(subString)) {
