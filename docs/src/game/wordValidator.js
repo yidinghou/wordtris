@@ -24,46 +24,93 @@ export class WordValidator {
     }
 
     /**
-     * Asynchronously loads the dictionary from a 'dict.csv' file and populates
-     * the validWords and wordDefinitions properties.
+     * Asynchronously loads the dictionary from all CSV files in the word_list directory
+     * and populates the validWords and wordDefinitions properties.
      */
     async loadWords() {
         try {
-            const response = await fetch('./dict.csv');
-            const data = await response.text();
-            
+            // List of CSV files in the word_list directory
+            const csvFiles = [
+                'src/word_list/3-letter-scrabble-words.csv',
+                'src/word_list/4-letter-scrabble-words-A-F.csv',
+                'src/word_list/4-letter-scrabble-words-G-L.csv',
+                'src/word_list/4-letter-scrabble-words-M-R.csv',
+                'src/word_list/4-letter-scrabble-words-S-Z.csv'
+            ];
+
             this.validWords = [];
             this.wordDefinitions = {};
-            
-            const lines = data.split('\n').filter(line => line.trim().length > 2);
-            if (lines.length <= 2) return; // No data or only headers
+            let totalWordsLoaded = 0;
 
-            // Parse Headers
-            const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-            const wordIdx = headers.indexOf('word');
-            const defIdx = headers.indexOf('definition');
+            for (const csvFile of csvFiles) {
+                try {
+                    console.log(`Loading words from ${csvFile}...`);
+                    const response = await fetch(csvFile);
+                    
+                    if (!response.ok) {
+                        console.warn(`Could not load ${csvFile}: ${response.status}`);
+                        continue;
+                    }
 
-            // Ensure we found the necessary header columns
-            if (wordIdx === -1 || defIdx === -1) return;
+                    const data = await response.text();
+                    const lines = data.split('\n').filter(line => line.trim().length > 2);
+                    
+                    if (lines.length <= 1) {
+                        console.warn(`No valid data in ${csvFile}`);
+                        continue;
+                    }
 
-            // Parse Rows
-            for (let i = 1; i < lines.length; i++) {
-                const row = lines[i].split(',');
-                const wordRaw = row[wordIdx];
-                const defRaw = row[defIdx];
+                    // Parse Headers
+                    const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+                    const wordIdx = headers.indexOf('word');
+                    const defIdx = headers.indexOf('definition');
 
-                if (!wordRaw) continue;
+                    // Ensure we found the necessary header columns
+                    if (wordIdx === -1 || defIdx === -1) {
+                        console.warn(`Missing required headers in ${csvFile}`);
+                        continue;
+                    }
 
-                const word = wordRaw.trim();
-                const def = defRaw.replace(/[\r\n]/g, '<br>'); // Replace newlines with <br> for HTML
+                    // Parse Rows
+                    let fileWordCount = 0;
+                    for (let i = 1; i < lines.length; i++) {
+                        const row = lines[i].split(',');
+                        const wordRaw = row[wordIdx];
+                        const defRaw = row[defIdx];
 
-                // Validation check for words
-                if (word.length >= this.minWordLength && word.length <= 7 && /^[a-z]+$/.test(word)) {
-                    this.validWords.push(word);
-                    this.wordDefinitions[word] = def;
+                        if (!wordRaw) continue;
+
+                        const word = wordRaw.trim().toLowerCase();
+                        const def = defRaw ? defRaw.replace(/[\r\n]/g, '<br>') : 'No definition available';
+
+                        // Validation check for words
+                        if (word.length >= this.minWordLength && word.length <= 7 && /^[a-z]+$/.test(word)) {
+                            this.validWords.push(word);
+                            this.wordDefinitions[word] = def;
+                            fileWordCount++;
+                        }
+                    }
+                    
+                    totalWordsLoaded += fileWordCount;
+                    console.log(`Loaded ${fileWordCount} words from ${csvFile}`);
+                    
+                } catch (fileError) {
+                    console.error(`Error loading ${csvFile}:`, fileError);
                 }
             }
-            console.log(`WordValidator: Loaded ${this.validWords.length} words.`);
+            
+            console.log(`WordValidator: Total loaded ${totalWordsLoaded} words from ${csvFiles.length} files.`);
+            
+            if (totalWordsLoaded === 0) {
+                console.warn('No words loaded! Using fallback dictionary.');
+                // Fallback to basic words if no files could be loaded
+                const fallbackWords = ['cat', 'dog', 'word', 'game', 'tile', 'play'];
+                fallbackWords.forEach(word => {
+                    this.validWords.push(word);
+                    this.wordDefinitions[word] = 'Fallback word';
+                });
+            }
+            
         } catch (error) {
             console.error('Error loading words:', error);
         }
