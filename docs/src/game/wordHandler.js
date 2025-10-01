@@ -18,7 +18,7 @@ export class WordHandler {
     if (wordLength >= 4) {
       const specialSound = './src/sounds/word-made-special.mp3';
       const random = Math.random();
-      if (random < 0.4) {
+      if (random < 0.8) {
         randomSound = specialSound;
       } else {
         const regularIndex = Math.floor((random - 0.4) / 0.2);
