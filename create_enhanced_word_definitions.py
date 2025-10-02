@@ -173,7 +173,7 @@ def main():
     # Create enhanced length-specific files
     print("\nCreating enhanced length-specific files...")
     length_results = {}
-    for length in range(3, 9):
+    for length in range(3, 8):
         count = create_enhanced_words_by_length_csv(length)
         length_results[length] = count
     
