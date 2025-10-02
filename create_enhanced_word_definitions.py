@@ -92,28 +92,22 @@ def get_comprehensive_word_list(target_length=None, include_stopwords=True):
     
     return list(all_words)
 
-def create_enhanced_words_by_length_csv(target_length, max_words_per_length=500):
+def create_enhanced_words_by_length_csv(target_length):
     """
     Create a CSV for words of a specific length using enhanced word sources.
+    Includes ALL words of the specified length.
     
     Args:
         target_length (int): The target word length (3-8)
-        max_words_per_length (int): Maximum number of words to include for this length
     
     Returns:
         int: Number of word-definition pairs created
     """
     filename = f"{target_length}_letter_words_enhanced.csv"
-    print(f"Creating enhanced {filename} for {target_length}-letter words...")
+    print(f"Creating enhanced {filename} for ALL {target_length}-letter words...")
     
     # Get comprehensive word list
     word_list = get_comprehensive_word_list(target_length=target_length)
-    
-    # Shuffle to get random selection
-    random.shuffle(word_list)
-    
-    word_definitions = []
-    processed = 0
     
     # Get stopwords for comparison
     try:
@@ -121,10 +115,20 @@ def create_enhanced_words_by_length_csv(target_length, max_words_per_length=500)
     except Exception:
         english_stopwords = set()
     
-    for word in word_list:
-        if len(word_definitions) >= max_words_per_length:
-            break
-            
+    # Separate stopwords and regular words to prioritize stopwords
+    stopwords_list = [word for word in word_list if word in english_stopwords]
+    regular_words_list = [word for word in word_list if word not in english_stopwords]
+    
+    # Shuffle regular words but keep stopwords first
+    random.shuffle(regular_words_list)
+    
+    # Combine: stopwords first, then regular words
+    prioritized_word_list = stopwords_list + regular_words_list
+    
+    word_definitions = []
+    processed = 0
+    
+    for word in prioritized_word_list:
         cleaned_word = clean_word(word)
         if cleaned_word and len(cleaned_word) == target_length:
             definition = get_word_definition(cleaned_word)
@@ -138,7 +142,7 @@ def create_enhanced_words_by_length_csv(target_length, max_words_per_length=500)
                 word_definitions.append((cleaned_word, definition))
                 processed += 1
             
-            if processed % 50 == 0:
+            if processed % 100 == 0:
                 print(f"  Processed {processed} {target_length}-letter words...")
     
     # Sort alphabetically
@@ -170,7 +174,7 @@ def main():
     print("\nCreating enhanced length-specific files...")
     length_results = {}
     for length in range(3, 9):
-        count = create_enhanced_words_by_length_csv(length, max_words_per_length=300)
+        count = create_enhanced_words_by_length_csv(length)
         length_results[length] = count
     
     print("\nGeneration complete!")
