@@ -181,20 +181,6 @@ def main():
     print("- Enhanced individual length files:")
     for length, count in length_results.items():
         print(f"  {length}-letter words: {count} entries in '{length}_letter_words_enhanced.csv'")
-    
-    # Show examples with common words
-    print("\nSample entries from common_words_with_definitions.csv:")
-    try:
-        with open("common_words_with_definitions.csv", 'r', encoding='utf-8') as f:
-            reader = csv.reader(f)
-            next(reader)  # Skip header
-            for i, row in enumerate(reader):
-                if i < 10:  # Show first 10 entries
-                    print(f"  {row[0]} ({len(row[0])} letters): {row[1][:60]}{'...' if len(row[1]) > 60 else ''}")
-                else:
-                    break
-    except Exception as e:
-        print(f"Error reading sample: {e}")
 
 if __name__ == "__main__":
     main()
