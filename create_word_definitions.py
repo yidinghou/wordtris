@@ -103,7 +103,7 @@ def create_enhanced_words_by_length_csv(target_length):
     Returns:
         int: Number of word-definition pairs created
     """
-    filename = f"{target_length}_letter_words_enhanced.csv"
+    filename = f"{target_length}_letter_words.csv"
     print(f"Creating enhanced {filename} for ALL {target_length}-letter words...")
     
     # Get comprehensive word list
