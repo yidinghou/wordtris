@@ -29,41 +29,46 @@ export class WordValidator {
      */
     async loadWords() {
         try {
-            const response = await fetch('./dict.csv');
-            const data = await response.text();
-            
+            // List of CSV files to load from docs/word_list
+            const csvFiles = [
+                './word_list/3_letter_words.csv',
+                './word_list/4_letter_words.csv',
+                './word_list/5_letter_words.csv',
+                './word_list/6_letter_words.csv',
+                './word_list/7_letter_words.csv',
+            ];
+
             this.validWords = [];
             this.wordDefinitions = {};
-            
-            const lines = data.split('\n').filter(line => line.trim().length > 2);
-            if (lines.length <= 2) return; // No data or only headers
 
-            // Parse Headers
-            const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-            const wordIdx = headers.indexOf('word');
-            const defIdx = headers.indexOf('definition');
+            for (const file of csvFiles) {
+                const response = await fetch(file);
+                if (!response.ok) continue;
+                const data = await response.text();
+                const lines = data.split('\n').filter(line => line.trim().length > 2);
+                if (lines.length <= 2) continue;
 
-            // Ensure we found the necessary header columns
-            if (wordIdx === -1 || defIdx === -1) return;
+                // Parse Headers
+                const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+                const wordIdx = headers.indexOf('word');
+                const defIdx = headers.indexOf('definition');
+                if (wordIdx === -1 || defIdx === -1) continue;
 
-            // Parse Rows
-            for (let i = 1; i < lines.length; i++) {
-                const row = lines[i].split(',');
-                const wordRaw = row[wordIdx];
-                const defRaw = row[defIdx];
-
-                if (!wordRaw) continue;
-
-                const word = wordRaw.trim();
-                const def = defRaw.replace(/[\r\n]/g, '<br>'); // Replace newlines with <br> for HTML
-
-                // Validation check for words
-                if (word.length >= this.minWordLength && word.length <= 7 && /^[a-z]+$/.test(word)) {
-                    this.validWords.push(word);
-                    this.wordDefinitions[word] = def;
+                // Parse Rows
+                for (let i = 1; i < lines.length; i++) {
+                    const row = lines[i].split(',');
+                    const wordRaw = row[wordIdx];
+                    const defRaw = row[defIdx];
+                    if (!wordRaw) continue;
+                    const word = wordRaw.trim();
+                    const def = defRaw.replace(/[\r\n]/g, '<br>');
+                    if (word.length >= this.minWordLength && word.length <= 8 && /^[a-z]+$/.test(word)) {
+                        this.validWords.push(word);
+                        this.wordDefinitions[word] = def;
+                    }
                 }
             }
-            console.log(`WordValidator: Loaded ${this.validWords.length} words.`);
+            console.log(`WordValidator: Loaded ${this.validWords.length} words from all CSVs.`);
         } catch (error) {
             console.error('Error loading words:', error);
         }
